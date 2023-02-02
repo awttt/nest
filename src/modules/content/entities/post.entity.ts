@@ -1,3 +1,4 @@
+import { Exclude, Expose, Type } from 'class-transformer';
 import {
     BaseEntity,
     Column,
@@ -12,31 +13,39 @@ import { PostBodyType } from '../constants';
 /**
  * 文章模型
  */
+@Exclude()
 @Entity('content_posts')
 export class PostEntity extends BaseEntity {
+    @Expose()
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    id!: string;
 
+    @Expose()
     @Column({ comment: '文章标题' })
-    title: string;
+    title!: string;
 
+    @Expose({ groups: ['post-detail'] })
     @Column({ comment: '文章内容', type: 'longtext' })
-    body: string;
+    body!: string;
 
+    @Expose()
     @Column({ comment: '文章描述', nullable: true })
     summary?: string;
 
+    @Expose()
     @Column({ comment: '关键字', type: 'simple-array', nullable: true })
     keywords?: string[];
 
+    @Expose()
     @Column({
         comment: '文章类型',
         type: 'enum',
         enum: PostBodyType,
         default: PostBodyType.MD,
     })
-    type: PostBodyType;
+    type!: PostBodyType;
 
+    @Expose()
     @Column({
         comment: '发布时间',
         type: 'varchar',
@@ -44,16 +53,21 @@ export class PostEntity extends BaseEntity {
     })
     publishedAt?: Date | null;
 
+    @Expose()
     @Column({ comment: '自定义文章排序', default: 0 })
-    customOrder: number;
+    customOrder!: number;
 
+    @Expose()
+    @Type(() => Date)
     @CreateDateColumn({
         comment: '创建时间',
     })
-    createdAt: Date;
+    createdAt!: Date;
 
+    @Expose()
+    @Type(() => Date)
     @UpdateDateColumn({
         comment: '更新时间',
     })
-    updatedAt: Date;
+    updatedAt!: Date;
 }
