@@ -26,6 +26,10 @@ import { PostOrderType } from '../constants';
  * 文章分页查询验证
  */
 export class QueryPostDto implements PaginateOptions {
+    @IsUUID(undefined, { message: '分类ID格式错误' })
+    @IsOptional()
+    category?: string;
+
     @Transform(({ value }) => toBoolean(value))
     @IsBoolean()
     @IsOptional()
