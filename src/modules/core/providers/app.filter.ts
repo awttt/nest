@@ -6,6 +6,10 @@ import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 
 /**
  * 全局过滤器,用于响应自定义异常
+ 定义一个用于映射异常处理表的属性resExceptions，在这个属性属性里，我们可以设置一些需要转换为HTTP的异常类，并且可以给他设置异常状态码（默认状态码是500）
+接下来判断当前抛出的异常对应的异常类是否在我们的映射表中，如果在我们把这个映射对象找出来。如果不在异常映射列表中而且也不是HTTP异常，则直接使用父类的handleUnkownError进行处理
+如果本身就是HTTP异常则直接使用父类的方式正常响应即可
+如果不是HTTP异常，那么就按映射的状态码来抛出HTTP异常
  */
 @Catch()
 export class AppFilter<T = Error> extends BaseExceptionFilter<T> {
