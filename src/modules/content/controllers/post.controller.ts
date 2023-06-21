@@ -52,14 +52,7 @@ export class PostController {
     @Post()
     @SerializeOptions({ groups: ['post-detail'] })
     async store(
-        @Body(
-            new ValidationPipe({
-                transform: true,
-                forbidUnknownValues: true,
-                validationError: { target: false },
-                groups: ['create'],
-            }),
-        )
+        @Body()
         data: CreatePostDto,
     ) {
         return this.service.create(data);
@@ -68,14 +61,7 @@ export class PostController {
     @Patch()
     @SerializeOptions({ groups: ['post-detail'] })
     async update(
-        @Body(
-            new ValidationPipe({
-                transform: true,
-                forbidUnknownValues: true,
-                validationError: { target: false },
-                groups: ['update'],
-            }),
-        )
+        @Body()
         data: UpdatePostDto,
     ) {
         return this.service.update(data);

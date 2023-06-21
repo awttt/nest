@@ -16,6 +16,7 @@ import {
 
 import { isNil, toNumber } from 'lodash';
 
+import { DtoValidation } from '@/modules/core/decorators/dto-validation.decorator';
 import { toBoolean } from '@/modules/core/helpers';
 
 import { PaginateOptions } from '@/modules/database/types';
@@ -25,6 +26,7 @@ import { PostOrderType } from '../constants';
 /**
  * 文章分页查询验证
  */
+@DtoValidation({ type: 'query' })
 export class QueryPostDto implements PaginateOptions {
     @IsUUID(undefined, { message: '分类ID格式错误' })
     @IsOptional()
@@ -57,6 +59,7 @@ export class QueryPostDto implements PaginateOptions {
 /**
  * 文章创建验证
  */
+@DtoValidation({ groups: ['create'] })
 export class CreatePostDto {
     @MaxLength(255, {
         always: true,
@@ -109,6 +112,7 @@ export class CreatePostDto {
 /**
  * 文章更新验证
  */
+@DtoValidation({ groups: ['update'] })
 export class UpdatePostDto extends PartialType(CreatePostDto) {
     @IsUUID(undefined, { groups: ['update'], message: '文章ID格式错误' })
     @IsDefined({ groups: ['update'], message: '文章ID必须指定' })

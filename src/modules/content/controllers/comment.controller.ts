@@ -55,13 +55,7 @@ export class CommentController {
     @Post()
     @SerializeOptions({ groups: ['comment-detail'] })
     async store(
-        @Body(
-            new ValidationPipe({
-                transform: true,
-                forbidUnknownValues: true,
-                validationError: { target: false },
-            }),
-        )
+        @Body()
         data: CreateCommentDto,
     ) {
         return this.service.create(data);
